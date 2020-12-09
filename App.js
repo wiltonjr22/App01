@@ -1,114 +1,80 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+import React, {useState} from 'react';
+import {View,Text,StyleSheet,TextInput,TouchableOpacity} from 'react-native';
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+export default function App1(){
+  const [peso,setPeso] = useState ('');
+  const [altura,setAltura] = useState ('');
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+  function ImcCalculo () {
+    const alt = altura / 100;
+    const imc = peso/ (alt * alt);
+    
+    if (imc < 18.6){
+      alert('Voce esta abaixo do peso! '+ imc.toFixed(2));
+    }else if(imc >= 18.6 && imc < 24.9){
+      alert('Voce esta com peso ideal  '+ imc.toFixed(2));
+    }else if(imc >= 24.9 ){
+      alert('Voce esta acima do peso!  '+ imc.toFixed(2));
+    }
+  }
 
-const App: () => React$Node = () => {
+
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Step One</Text>
-              <Text style={styles.sectionDescription}>
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <View style={styles.container}>
+      <Text style={styles.title}>Calcule seu IMC </Text>
+
+      <TextInput
+      style={styles.input}
+      value={peso}
+      onChangeText={ (peso) => setPeso(peso) }
+      placeholder="Peso (kg)"
+      keyboardType="numeric"
+      />
+
+      <TextInput
+      style={styles.input}
+      value={altura}
+      onChangeText={ (altura) => setAltura(altura) }
+      placeholder="Altura (cm)"
+      keyboardType="numeric"
+      />
+
+      <TouchableOpacity 
+      style={styles.button}
+      onPress={ImcCalculo}
+      >
+        <Text style={styles.buttonText}>Calcular</Text>
+      </TouchableOpacity>
+
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  scrollView: {
-    backgroundColor: Colors.lighter,
+  container:{
+    flex: 1,
   },
-  engine: {
-    position: 'absolute',
-    right: 0,
+  title:{
+    textAlign: 'center',
+    marginTop: 25,
+    fontSize: 30
   },
-  body: {
-    backgroundColor: Colors.white,
+  input:{
+    backgroundColor: '#121212',
+    borderRadius: 10,
+    margin: 15,
+    padding: 10,
+    color: '#fff',
   },
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  button:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 15,
+    backgroundColor: '#41AEF4',
+    padding: 10,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.black,
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-    color: Colors.dark,
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  footer: {
-    color: Colors.dark,
-    fontSize: 12,
-    fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
-    textAlign: 'right',
-  },
+  buttonText:{
+    color: '#FFF',
+    fontSize: 25,
+  }
 });
-
-export default App;
